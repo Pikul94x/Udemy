@@ -28,12 +28,12 @@ const showMsg = () => {
 };
 
 const checkPassword = () => {
-    if (pass.value !== "") {
-        showMsg()
-    } else {
-        	p.textContent = "Nie podałeś hasła...";
-					p.style.color = "";
-    }
+	if (pass.value !== "") {
+		showMsg();
+	} else {
+		p.textContent = "Nie podałeś hasła...";
+		p.style.color = "";
+	}
 };
 
 pass.addEventListener("keyup", checkPassword);

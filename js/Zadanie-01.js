@@ -13,3 +13,4 @@ const showImg = () => {
 };
 
 btn.addEventListener("click", showImg);
+
