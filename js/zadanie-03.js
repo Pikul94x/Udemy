@@ -36,4 +36,5 @@ const checkPassword = () => {
 	}
 };
 
-pass.addEventListener("keyup", checkPassword);
+pass.addEventListener("input", checkPassword);
+

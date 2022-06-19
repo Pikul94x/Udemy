@@ -3,6 +3,7 @@ let errorInfo;
 let addBtn;
 let ulList;
 let newTodo;
+
 let popup;
 let popupInfo;
 let todoToEdit;
@@ -33,48 +34,41 @@ const prepareDOMEvents = () => {
 	ulList.addEventListener("click", checkClick);
 	popupCloseBtn.addEventListener("click", closePopup);
 	popupAddBtn.addEventListener("click", changeTodoText);
-	todoInput.addEventListener("keydown", enterKeyCheck);
+	todoInput.addEventListener("keyup", enterKeyCheck);
 };
 
 const addNewTodo = () => {
-	if (todoInput.value !== "") {
+	if (todoInput.value === "") {
+		errorInfo.textContent = "Wprowadź treść zadania!";
+		errorInfo.style.color = "red";
+	} else {
 		newTodo = document.createElement("li");
 		newTodo.textContent = todoInput.value;
 		createToolsArea();
 		ulList.append(newTodo);
-
 		todoInput.value = "";
 		errorInfo.textContent = "";
-	} else {
-		errorInfo.textContent = "Wpisz treść zadania";
 	}
 };
 
 const createToolsArea = () => {
 	const div = document.createElement("div");
-	div.setAttribute("class", "tools");
+	div.classList.add("tools");
 	newTodo.append(div);
 
-	const btn1 = document.createElement("button");
-	btn1.setAttribute("class", "complete");
-	div.append(btn1);
+	const completeBtn = document.createElement("button");
+	completeBtn.classList.add("complete");
+	completeBtn.innerHTML = '<i class="fas fa-check"></i>';
 
-	const i = document.createElement("i");
-	i.setAttribute("class", "fas fa-check");
-	btn1.append(i);
+	const editBtn = document.createElement("button");
+	editBtn.classList.add("edit");
+	editBtn.textContent = "EDIT";
 
-	const btn2 = document.createElement("button");
-	btn2.setAttribute("class", "edit");
-	btn2.textContent = "EDIT";
-	div.append(btn2);
+	const deleteBtn = document.createElement("button");
+	deleteBtn.classList.add("delete");
+	deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
 
-	const btn3 = document.createElement("button");
-	btn3.setAttribute("class", "delete");
-	div.append(btn3);
-
-	const i2 = document.createElement("i");
-	i2.setAttribute("class", "fas fa-times");
-	btn3.append(i2);
+	div.append(completeBtn, editBtn, deleteBtn);
 };
 
 const checkClick = e => {
@@ -84,6 +78,7 @@ const checkClick = e => {
 	} else if (e.target.matches(".edit")) {
 		editTodo(e);
 	} else if (e.target.matches(".delete")) {
+		// closePopup();
 		deleteTodo(e);
 	}
 };
@@ -106,16 +101,17 @@ const changeTodoText = () => {
 		popup.style.display = "none";
 		popupInfo.textContent = "";
 	} else {
-		popupInfo.textContent = "Musisz podać jakaś treść";
+		popupInfo.textContent = "Musisz podać jakąś treść";
 	}
 };
 
 const deleteTodo = e => {
 	e.target.closest("li").remove();
 
-	const allLi = document.querySelectorAll("li");
-	if (allLi.length === 0) {
-		errorInfo.textContent = "Brak zadań na liście.";
+	const allTodos = ulList.querySelectorAll("li");
+
+	if (allTodos.length === 0) {
+		errorInfo.textContent = "Brak zadań na liście";
 	}
 };
 

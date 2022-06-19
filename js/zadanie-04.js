@@ -31,7 +31,9 @@ const celToFahr = () => {
 };
 
 const conversion = () => {
-	if (converter.value !== "") {
+	if (converter.value === "") {
+		result.textContent = "Podaj jakąś liczbę...";
+	} else {
 		if (firstSpan.textContent === "°C") {
 			fahrToCel();
 		} else {
